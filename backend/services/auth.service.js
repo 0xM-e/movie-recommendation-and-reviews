@@ -24,3 +24,17 @@ exports.login = async ({ email, password }) => {
     const token = signToken({ id: user._id, username: user.username, role: user.role });
     return { token, user: { id: user._id, username: user.username, email: user.email } };
 };
+
+exports.changePassword = async ({ userId, currentPassword, newPassword }) => {
+    const user = await User.findById(userId);
+    if (!user) throw new Error('User not found');
+
+    const match = await bcrypt.compare(currentPassword, user.password);
+    if (!match) throw new Error('Current password is incorrect');
+
+    const hashed = await bcrypt.hash(newPassword, 10);
+    user.password = hashed;
+
+    await user.save();
+};
+
