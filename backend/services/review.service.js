@@ -18,13 +18,14 @@ exports.createReview = async (imdbID, author, rating, comment) => {
 }
 
 exports.updateReview = async (imdbID, reviewID, rating, comment) => {
-    const updatedReview = await Review.findOneAndUpdate(
+    const previousReview = await Review.findOne({ imdbID: imdbID, _id: reviewID });
+    await Review.findOneAndUpdate(
         { imdbID: imdbID, _id: reviewID },
         { rating, comment },
         { new: true }
     );
 
-    return updatedReview;
+    return previousReview;
 }
 
 exports.deleteReview = async (imdbID, reviewID) => {

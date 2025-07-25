@@ -45,12 +45,12 @@ async function fetchMovieByImdbId(imdbID) {
  * @param {String} title
  * @returns {Object} movie data
  */
-async function fetchMovieByTitle(title) {
+async function fetchMovieByName(movieName) {
   try {
     const response = await axios.get(API_URL, {
       params: {
         apikey: API_KEY,
-        t: title,
+        t: movieName,
         plot: 'full'
       }
     });
@@ -79,5 +79,5 @@ async function fetchMovieByTitle(title) {
 
 module.exports = {
   fetchMovieByImdbId,
-  fetchMovieByTitle
+  fetchMovieByName
 };

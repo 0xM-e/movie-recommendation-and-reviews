@@ -1,4 +1,5 @@
 const reviewService = require('../services/review.service');
+const moviesService = require('../services/movie.service');
 const Review = require('../models/Review');
 
 exports.getMovieReviewsByImdbID = async (req, res) => {
@@ -24,6 +25,7 @@ exports.createReview = async (req, res) => {
             return res.status(400).json({ message: 'Failed to create review' });
         }
 
+        moviesService.calculateRating(imdbID, rating);
         res.status(201).json(newReview);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -45,6 +47,7 @@ exports.updateReview = async (req, res) => {
             return res.status(404).json({ message: 'Review not found' });
         }
 
+        moviesService.updateRating(imdbID, updatedReview.rating, rating);
         res.json(updatedReview);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -65,6 +68,7 @@ exports.deleteReview = async (req, res) => {
             return res.status(404).json({ message: 'Review not found' });
         }
 
+        moviesService.deleteRating(imdbID, deletedReview.rating);
         res.json({ message: 'Review deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
