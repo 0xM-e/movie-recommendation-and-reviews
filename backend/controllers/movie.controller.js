@@ -51,15 +51,12 @@ exports.getMovieById = async (req, res) => {
 
 exports.updateMovie = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { imdbID } = req.params;
     const updates = req.body;
+    const user = req.user;
 
-    const updatedMovie = await Movie.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true
-    });
-
-    if (!updatedMovie) {
+    const updateMovie = await movieService.updateMovie(user, imdbID, updates);
+    if (!updateMovie) {
       return res.status(404).json({ message: 'Movie not found.' });
     }
 
@@ -71,8 +68,10 @@ exports.updateMovie = async (req, res) => {
 
 exports.deleteMovie = async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedMovie = await Movie.findByIdAndDelete(id);
+    const { imdbID } = req.params;
+    const user = req.user;
+
+    const deletedMovie = await movieService.deleteMovie(user, imdbID);
 
     if (!deletedMovie) {
       return res.status(404).json({ message: 'Movie not found.' });
@@ -83,3 +82,20 @@ exports.deleteMovie = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.getMostPopularMovies = async (req, res) => {
+  try {
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+
+    const mostPopularMovies = await movieService.getMostPopularMovies(page, limit);
+
+    if (!mostPopularMovies || mostPopularMovies.length === 0) {
+      return res.status(404).json({ message: 'No popular movies found.' });
+    }
+
+    res.json(mostPopularMovies);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
