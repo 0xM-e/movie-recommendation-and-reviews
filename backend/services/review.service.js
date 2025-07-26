@@ -72,3 +72,51 @@ exports.deleteReview = async (imdbID, author, reviewID) => {
     await Review.findOneAndDelete({ _id: existingReview._id });
     return existingReview;
 };
+
+exports.markReviewAsUsefull = async (reviewID, user) => {
+    const review = await Review.findById(reviewID);
+    if (!review) {
+        return null;
+    }
+
+    const userIdStr = user.id.toString();
+
+    const notUsefullIndex = review.notusefullUsers.findIndex(id => id.toString() === userIdStr);
+    if (notUsefullIndex !== -1) {
+        review.notusefullUsers.splice(notUsefullIndex, 1);
+        if (review.notusefull > 0) review.notusefull--;
+    }
+
+    if (review.usefullUsers.some(id => id.toString() === userIdStr)) {
+        return null;
+    }
+    review.usefull++;
+    review.usefullUsers.push(user.id);
+
+    return await review.save();
+}
+
+
+exports.markReviewAsNotUsefull = async (reviewID, user) => {
+    const review = await Review.findById(reviewID);
+    if (!review) {
+        return null;
+    }
+
+    const userIdStr = user.id.toString();
+
+    const usefullIndex = review.usefullUsers.findIndex(id => id.toString() === userIdStr);
+    if (usefullIndex !== -1) {
+        review.usefullUsers.splice(usefullIndex, 1);
+        if (review.usefull > 0) review.usefull--;
+    }
+
+    if (review.notusefullUsers.some(id => id.toString() === userIdStr)) {
+        return null;
+    }
+
+    review.notusefull++;
+    review.notusefullUsers.push(user.id);
+
+    return await review.save();
+}

@@ -93,3 +93,43 @@ exports.deleteReview = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+exports.markReviewAsUsefull = async (req, res) => {
+    try {
+        const { reviewID } = req.params;
+        const user = req.user;
+
+        if (!reviewID || !user) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+
+        const updatedReview = await reviewService.markReviewAsUsefull(reviewID, user);
+        if (!updatedReview) {
+            return res.status(404).json({ message: 'Review not found or already marked as useful' });
+        }
+
+        res.json(updatedReview);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.markReviewAsNotUsefull = async (req, res) => {
+    try {
+        const { reviewID } = req.params;
+        const user = req.user;
+
+        if (!reviewID || !user.id) {
+            return res.status(400).json({ message: 'Missing required fields' });
+        }
+
+        const updatedReview = await reviewService.markReviewAsNotUsefull(reviewID, user);
+        if (!updatedReview) {
+            return res.status(404).json({ message: 'Review not found or already marked as not useful' });
+        }
+
+        res.json(updatedReview);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
