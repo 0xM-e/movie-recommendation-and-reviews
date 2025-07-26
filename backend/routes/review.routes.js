@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const reviewController = require('../controllers/review.controller');
+const { authenticate } = require('../middleware/auth.middleware');
 
 router.get('/getall', reviewController.getPaginatedReviews);
 router.get('/:imdbID', reviewController.getMovieReviewsByImdbID);
 
 
-router.post('/:imdbID', reviewController.createReview);
+router.post('/:imdbID', authenticate, reviewController.createReview);
 
-router.put('/:imdbID/:reviewID', reviewController.updateReview);
+router.put('/:imdbID/:reviewID', authenticate, reviewController.updateReview);
 
-router.delete('/:imdbID/:reviewID', reviewController.deleteReview);
+router.delete('/:imdbID/:reviewID', authenticate, reviewController.deleteReview);
 
 module.exports = router;

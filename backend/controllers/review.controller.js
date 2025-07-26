@@ -30,14 +30,17 @@ exports.getMovieReviewsByImdbID = async (req, res) => {
 exports.createReview = async (req, res) => {
     try {
         const { imdbID } = req.params;
-        const { author, rating, comment } = req.body;
+        const { rating, comment } = req.body;
+        const author = req.user.id;
+
 
         if (!imdbID || !author || rating === undefined || !comment) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
-        const newReview = reviewService.createReview(imdbID, author, rating, comment);
+        const newReview = await reviewService.createReview(imdbID, author, rating, comment);
+        console.log(newReview);
         if (!newReview) {
-            return res.status(400).json({ message: 'Failed to create review' });
+            return res.status(400).json({ message: 'You have already submitted a review for this movie' });
         }
 
         moviesService.calculateRating(imdbID, rating);
@@ -51,12 +54,13 @@ exports.updateReview = async (req, res) => {
     try {
         const { imdbID, reviewID } = req.params;
         const { rating, comment } = req.body;
+        const author = req.user.id;
 
         if (!imdbID || !reviewID || rating === undefined || !comment) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        const updatedReview = await reviewService.updateReview(imdbID, reviewID, rating, comment);
+        const updatedReview = await reviewService.updateReview(imdbID, author, reviewID, rating, comment);
 
         if (!updatedReview) {
             return res.status(404).json({ message: 'Review not found' });
@@ -72,12 +76,12 @@ exports.updateReview = async (req, res) => {
 exports.deleteReview = async (req, res) => {
     try {
         const { imdbID, reviewID } = req.params;
-
+        const author = req.user.id;
         if (!imdbID || !reviewID) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        const deletedReview = await reviewService.deleteReview(imdbID, reviewID);
+        const deletedReview = await reviewService.deleteReview(imdbID, author, reviewID);
 
         if (!deletedReview) {
             return res.status(404).json({ message: 'Review not found' });
