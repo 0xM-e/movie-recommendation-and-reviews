@@ -11,7 +11,11 @@ const authRoutes = require('./routes/auth.routes');
 const movieRoutes = require('./routes/movie.routes');
 const reviewRoutes = require('./routes/review.routes');
 
+
+const listEndpoints = require('express-list-endpoints');
+
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +32,16 @@ app.use('/users', usersRouter);
 app.use('/auth', authRoutes);
 app.use('/movies', movieRoutes);
 app.use('/reviews', reviewRoutes);
+
+app.get('/endpoints', (req, res) => {
+  const endpoints = listEndpoints(app);
+  // Daha okunabilir JSON için map ile sadece method ve path alıyoruz
+  const formatted = endpoints.map(ep => ({
+    path: ep.path,
+    methods: ep.methods.join(', ')
+  }));
+  res.json(formatted);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

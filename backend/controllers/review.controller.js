@@ -2,6 +2,21 @@ const reviewService = require('../services/review.service');
 const moviesService = require('../services/movie.service');
 const Review = require('../models/Review');
 
+exports.getPaginatedReviews = async (req, res) => {
+    const page = req.query.page;
+    const limit = req.query.limit;
+    try {
+        const reviews = await reviewService.getPaginatedReviews(page, limit);
+        if (!reviews || reviews.length === 0) {
+            return res.status(404).json({ message: 'No reviews found' });
+        }
+
+        res.json(reviews);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 exports.getMovieReviewsByImdbID = async (req, res) => {
     try {
         const { imdbID } = req.params;

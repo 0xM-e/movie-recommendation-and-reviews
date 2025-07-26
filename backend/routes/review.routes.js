@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const reviewController = require('../controllers/review.controller');
 
+router.get('/getall', reviewController.getPaginatedReviews);
 router.get('/:imdbID', reviewController.getMovieReviewsByImdbID);
+
 
 router.post('/:imdbID', reviewController.createReview);
 

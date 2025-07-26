@@ -1,5 +1,26 @@
 const Review = require('../models/Review');
 
+exports.getPaginatedReviews = async (page, limit) => {
+    const skip = (page - 1) * limit;
+    const [reviews, total] = await Promise.all([
+        Review.find()
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .populate('author', 'username role'),
+
+        Review.countDocuments()
+    ]);
+
+    return {
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+        totalItems: total,
+        data: reviews
+    };
+};
+
 exports.getReviewsByImdbID = async (imdbID) => {
     const reviews = await Review.find({ imdbID: imdbID }).populate('author', 'username role');
     return reviews;
