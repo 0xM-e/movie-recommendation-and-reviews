@@ -22,7 +22,6 @@ const LoginPage = () => {
 
     return (
         <div className="auth-container">
-            <div className="overlay" />
             <div className="auth-box">
                 <div className="auth-logo">🎬 MoviVibe</div>
                 <h2 className="auth-title">Login</h2>

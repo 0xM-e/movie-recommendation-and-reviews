@@ -55,7 +55,6 @@ const RegisterPage = () => {
 
     return (
         <div className="auth-container">
-            <div className="overlay" />
             <div className="auth-box">
                 <div className="auth-logo">🎬 MoviVibe</div>
                 <h2 className="auth-title">Sign Up</h2>

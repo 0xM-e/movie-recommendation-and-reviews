@@ -1,6 +1,4 @@
 .landing-container {
-    background: url('https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg') no-repeat center center fixed;
-    background-size: cover;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -10,17 +8,7 @@
     overflow: hidden;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
-    z-index: 0;
-  }
-  
+    
   .glass-box {
     position: relative;
     z-index: 1;

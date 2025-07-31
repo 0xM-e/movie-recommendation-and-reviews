@@ -11,6 +11,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 a {

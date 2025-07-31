@@ -10,7 +10,6 @@ const LandingPage = () => {
 
     return (
         <div className="landing-container">
-            <div className="overlay" />
             <div className="glass-box">
                 <h1 className="main-title">🎬 Movie Review</h1>
                 <p className="tagline">Discover, comment, save your favorites.</p>

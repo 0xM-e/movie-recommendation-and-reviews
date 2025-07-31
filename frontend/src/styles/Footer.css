@@ -1,6 +1,7 @@
 .site-footer {
     padding: 60px 20px 20px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 1));
+    backdrop-filter: blur(10px);
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Segoe UI', sans-serif;
     position: relative;
