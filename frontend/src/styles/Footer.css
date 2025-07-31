@@ -4,8 +4,14 @@
     backdrop-filter: blur(10px);
     color: rgba(255, 255, 255, 0.9);
     font-family: 'Segoe UI', sans-serif;
-    position: relative;
-    z-index: 2;
+    left: 0;
+    bottom: 0;
+    width: '100%';
+    background: '#232526';
+    color: '#fff';
+    text-align: 'center';
+    padding: '12px 0';
+    z-index: 100;
   }
   
   .footer-content {
