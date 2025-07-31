@@ -5,6 +5,7 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import MovieDetailPage from './pages/MovieDetailPage';
 import ProfilePage from './pages/ProfilePage';
+import HomePage from './pages/HomePage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css'
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>

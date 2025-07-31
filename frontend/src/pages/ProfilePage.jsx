@@ -27,8 +27,7 @@ function ProfilePage() {
             borderRadius: '50%',
             marginBottom: 16,
             objectFit: 'cover',
-          }}
-        />
+          }}/>
       <div>
         <strong>Ad:</strong> {mockUser.name}
       </div>
