@@ -1,0 +1,242 @@
+.movie-detail-container {
+    min-height: 100vh;
+    padding: 40px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+.movie-detail-box {
+    margin-top: 70px;
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    max-width: 800px;
+    width: 100%;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.movie-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.movie-poster {
+    width: 180px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.movie-info {
+    flex: 1;
+}
+
+.movie-title {
+    font-size: 1.8rem;
+    margin: 0 0 10px;
+    color: #ffffff;
+}
+
+.movie-director {
+    font-style: italic;
+    color: #ff9ea7;
+    margin-bottom: 10px;
+}
+
+.movie-description {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 12px;
+}
+
+.movie-rating {
+    font-weight: 600;
+    color: #ff7b7b;
+}
+
+.review-section {
+    margin-top: 30px;
+}
+
+.review-title {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: #ff7b7b;
+}
+
+.no-reviews {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.review-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 16px 16px 40px 16px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    color: white;
+    backdrop-filter: blur(8px);
+    transition: background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid #ff4b72;
+    position: relative;
+}
+
+.review-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.review-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    position: relative;
+}
+
+.review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ff9ea7;
+}
+
+.review-meta-comment {
+    display: flex;
+    flex: 1;
+}
+
+.review-top-row {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.review-user-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 120px;
+}
+
+.review-user {
+    margin: 0;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.review-role {
+    font-size: 0.75rem;
+    color: #ffd1d1;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 2px;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    max-width: 75%;
+    text-align: left;
+    margin: 0;
+}
+
+.review-footer {
+    display: flex;
+    gap: 14px;
+    font-size: 0.9rem;
+    color: #ffd6d6;
+    position: absolute;
+    bottom: 10px;
+    right: 16px;
+}
+
+.review-form {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.3s ease, background 0.3s ease;
+}
+
+.review-textarea:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ff9ea7;
+}
+
+.submit-review-button {
+    align-self: flex-end;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-review-button:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 8px #ff4b72;
+}
+
+
+.vote-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+}
+
+.vote-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vote-button:focus {
+    outline: none;
+    box-shadow: 0 0 6px #ff4b72;
+}
+
+.vote-button.useful {
+    color: #ff7b7b;
+}
+
+.vote-button.not-useful {
+    color: #ffa3a3;
+}
