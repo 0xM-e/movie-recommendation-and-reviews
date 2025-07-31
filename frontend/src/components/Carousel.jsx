@@ -84,10 +84,6 @@ const Carousel = ({ panels, panelWidth, panelHeight, rotationSpeed }) => {
                     })}
                 </div>
             </div>
-            <div className="carousel-buttons">
-                <button onClick={handlePrev} className="carousel-button">{"<"}</button>
-                <button onClick={handleNext} className="carousel-button">{">"}</button>
-            </div>
         </div>
     );
 };
