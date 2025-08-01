@@ -6,6 +6,7 @@ import RegisterPage from './pages/Register';
 import MovieDetailPage from './pages/MovieDetailPage';
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
+import ImageSlider from './components/ImageSlider';
 import Footer from './components/Footer';
 import './App.css'
 
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <div className='overlay' />
       <Header />
+      <ImageSlider />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
