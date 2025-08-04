@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar';
 import '../styles/Header.css';
 
 const Header = () => {
@@ -7,15 +8,7 @@ const Header = () => {
     <header className="main-header">
       <div className="header-container">
         <div className="header-logo">MoviVibe</div>
-
-        <div className="header-search">
-          <input
-            type="text"
-            placeholder="Search movies..."
-            className="search-input"
-          />
-        </div>
-
+        <SearchBar />
         <nav className="header-nav">
           <Link to="/home">Home</Link>
           <Link to="/login">Login</Link>
