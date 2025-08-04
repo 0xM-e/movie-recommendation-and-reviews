@@ -15,6 +15,8 @@ function App() {
     <div className="App">
       <div className='overlay' />
       <Header />
+      <div className='App-header'>
+      </div>
       <ImageSlider />
       <Routes>
         <Route path="/" element={<LandingPage />} />
