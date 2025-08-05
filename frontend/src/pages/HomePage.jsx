@@ -103,6 +103,26 @@ const panels = [
         genre: 'Drama, Music',
         description: 'The conflict between an ambitious drum student and his strict teacher.'
     },
+    {
+        id: 11,
+        image: 'https://image.tmdb.org/t/p/w500/mubt4bnVfpJ5lBMq93DidEuMkJr.jpg',
+        title: 'Whiplash',
+        rate: '⭐ 4.4',
+        director: 'Damien Chazelle',
+        year: 2014,
+        genre: 'Drama, Music',
+        description: 'The conflict between an ambitious drum student and his strict teacher.'
+    },
+    {
+        id: 12,
+        image: 'https://image.tmdb.org/t/p/w500/mubt4bnVfpJ5lBMq93DidEuMkJr.jpg',
+        title: 'Whiplash',
+        rate: '⭐ 4.4',
+        director: 'Damien Chazelle',
+        year: 2014,
+        genre: 'Drama, Music',
+        description: 'The conflict between an ambitious drum student and his strict teacher.'
+    },
 ];
 
 const comments = [
@@ -168,9 +188,9 @@ const HomePage = () => {
                 <div className='home-item'>
                     <Carousel
                         panels={panels}
-                        panelWidth={500}
-                        panelHeight={500}
-                        rotationSpeed={0.3}
+                        panelWidth={300}
+                        panelHeight={550}
+                        rotationSpeed={0.1}
                     />
                 </div>
 

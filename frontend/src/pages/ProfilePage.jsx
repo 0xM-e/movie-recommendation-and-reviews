@@ -1,7 +1,8 @@
 import React from 'react';
+import "../styles/ProfilePage.css";
 
 const mockUser = {
-  name: 'Kullanıcı Adı',
+  name: 'Kullanici Adı',
   email: 'kullanici@email.com',
   joined: '2024-01-01',
     avatar: 'https://i.redd.it/ins05wj3pmef1.jpeg',
@@ -11,14 +12,10 @@ const mockUser = {
   ]
 };
 
-function ProfilePage() {
-  return (
-    <div className="profile-page" style={{
-        height: '100vh',
-        alignContent: 'center',
-        backgroundColor: '#1a1a2e',
-        color: 'white' }}>
-        <img
+/*trash()
+{
+  <div>
+    <img
           src={mockUser.avatar}
           alt="Avatar"
           style={{            
@@ -46,6 +43,12 @@ function ProfilePage() {
           ))}
         </ul>
       </div>
+  </div> 
+}*/
+
+function ProfilePage() {
+  return (
+    <div className="profile-page">
     </div>
   );
 }

@@ -43,7 +43,7 @@ const Carousel = ({ panels, panelWidth, panelHeight, rotationSpeed }) => {
             <div className="carousel-container">
                 <div
                     className="carousel"
-                    style={{ transform: `translateZ(-388px) rotateY(${rotation}deg)` }}
+                    style={{ transform: `translateZ(-450px) rotateY(${rotation}deg)` }}
                 >
                     {panels.map((panel, index) => {
                         const panelAngle = angle * index;
@@ -54,7 +54,7 @@ const Carousel = ({ panels, panelWidth, panelHeight, rotationSpeed }) => {
                                 key={panel.id}
                                 className="carousel-panel"
                                 style={{
-                                    transform: `rotateY(${panelAngle}deg) translateZ(450px) rotateY(${-rotation - panelAngle}deg)`,
+                                    transform: `rotateY(${panelAngle}deg) translateZ(550px) rotateY(${-rotation - panelAngle}deg)`,
                                 }}
                             >
                                 <div className="card-image">
