@@ -3,9 +3,10 @@ const router = express.Router();
 const movieController = require('../controllers/movie.controller');
 const { authenticate } = require('../middleware/auth.middleware');
 
-router.get('/id/:imdbID', movieController.getMovieById);
+router.get('/id/:movieId', movieController.getMovieById);
 router.get('/name/:movieName', movieController.getMovieByName);
 router.get('/popular', movieController.getMostPopularMovies);
+router.get('/search/:movieName', movieController.searchMovieByName);
 
 router.put('/update/:imdbID', authenticate, movieController.updateMovie);
 

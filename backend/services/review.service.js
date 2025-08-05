@@ -1,4 +1,6 @@
 const Review = require('../models/Review');
+const Movie = require('../models/Movie');
+const movieService = require('./movie.service');
 const mongoose = require('mongoose');
 
 exports.getPaginatedReviews = async (page, limit) => {
@@ -32,6 +34,23 @@ exports.createReview = async (imdbID, author, rating, comment) => {
     if (existingReview) {
         return null;
     }
+    const existingMovie = await movieService.isMovieExists(imdbID);
+
+    if (!existingMovie) {
+        const fetchMovie = await movieService.fetchMovieById(imdbID);
+        if (!fetchMovie) {
+            throw new Error('Movie not found');
+        }
+        const newMovie = new Movie({
+            imdbID: fetchMovie.imdbID,
+            title: fetchMovie.title,
+            director: fetchMovie.director,
+            poster: fetchMovie.poster
+        });
+        await newMovie.save();
+        console.log('Movie created:', newMovie);
+    }
+
     const newReview = new Review({
         imdbID,
         author,
@@ -40,7 +59,8 @@ exports.createReview = async (imdbID, author, rating, comment) => {
     });
 
     await newReview.save();
-    return newReview;
+    const populatedNewReview = await newReview.populate('author', 'username role');
+    return populatedNewReview;
 }
 
 exports.updateReview = async (imdbID, author, reviewID, rating, comment) => {

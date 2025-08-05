@@ -1,6 +1,20 @@
 const movieService = require('../services/movie.service');
 const Movie = require('../models/Movie');
 
+exports.isMovieExists = async (req, res, next) => {
+  const { imdbID } = req.params;
+  try {
+    const exists = await movieService.isMovieExists(imdbID);
+    if (exists) {
+      return res.status(400).json({ message: 'Movie already exists in the database.' });
+    }
+    next();
+  } catch (error) {
+    console.error('Error checking movie existence:', error.message);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+}
+
 exports.getMovieByName = async (req, res) => {
   const { movieName } = req.params;
   console.log(`Searching for movie: ${movieName}`);
@@ -9,7 +23,7 @@ exports.getMovieByName = async (req, res) => {
 
     if (!movie) {
 
-      // Fetch data from OMDb
+      // Fetch data from TMDb
       movie = await movieService.fetchMovieByName(movieName);
       const newMovie = new Movie();
       newMovie.imdbID = movie._id;
@@ -26,21 +40,11 @@ exports.getMovieByName = async (req, res) => {
 
 exports.getMovieById = async (req, res) => {
   try {
-    const { imdbID } = req.params;
-    let movie = await Movie.findOne({ imdbID });
+    const { movieId } = req.params;
+    let movie = await movieService.fetchMovieById(movieId);
 
     if (!movie) {
-      console.log(`Movie with ID ${imdbID} not found in database. Fetching from OMDb...`);
-      // Fetch data from OMDb
-      movie = await movieService.fetchMovieByImdbId(imdbID);
-      const newMovie = new Movie();
-      newMovie.imdbID = movie._id;
-      newMovie.poster = movie.poster;
-      newMovie.title = movie.title;
-      newMovie.save();
-    }
-    else {
-      console.log(`Movie with ID ${imdbID} found in database.`);
+      throw new Error(`Movie with ID ${movieId} not found in TMDb.`);
     }
 
     res.json(movie);
@@ -48,6 +52,22 @@ exports.getMovieById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.searchMovieByName = async (req, res) => {
+  const { movieName } = req.params;
+  console.log(`Searching for movie: ${movieName}`);
+  try {
+    const movies = await movieService.fetchMovieByName(movieName);
+
+    if (!movies || movies.length === 0) {
+      return res.status(404).json({ message: 'No movies found.' });
+    }
+
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 
 exports.updateMovie = async (req, res) => {
   try {
