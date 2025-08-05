@@ -31,11 +31,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRoutes);
-app.use('/movies', movieRoutes);
-app.use('/reviews', reviewRoutes);
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/movies', movieRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.get('/endpoints', (req, res) => {
   const endpoints = listEndpoints(app);
