@@ -56,7 +56,7 @@ const SearchBar = () => {
         console.log(`Selected: ${result.title} (${result.year})`);
         setResults([]);
         setQuery('');
-        navigate(`/movies/${result.id}`, { state: { movie: result.id } });
+        navigate(`/movies/${result.id}/${result.title}`, { state: { movie: result.id } });
     };
 
     return (

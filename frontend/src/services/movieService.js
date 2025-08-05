@@ -1,6 +1,6 @@
 import api from './api';
 
-const movieServie = {
+const movieService = {
     searchMoviesByName: async (movieName) => {
         console.log(`Searching for movie: ${movieName}`);
         const response = await api.get(`../movies/search/${movieName}`);
@@ -13,4 +13,4 @@ const movieServie = {
     }
 };
 
-export default movieServie;
+export default movieService;
