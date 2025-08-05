@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Auth.css';
+import authService from '../services/AuthService';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -8,16 +9,19 @@ const LoginPage = () => {
     const [error, setError] = useState('');
     const [remember, setRemember] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!email || !password) {
             setError('Please fill in all fields.');
             return;
         }
-
+        authService.login({ email, password})
         console.log({ email, password, remember });
         setError('');
         alert('Login successful!');
+        navigate('/home');
     };
 
     return (

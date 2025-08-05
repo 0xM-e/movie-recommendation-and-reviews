@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Auth.css';
+import authService from '../services/AuthService';
 
 const RegisterPage = () => {
     // Form state
@@ -13,6 +14,8 @@ const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData((prev) => ({
@@ -49,8 +52,9 @@ const RegisterPage = () => {
             setErrors(validationErrors);
             return;
         }
-
+        authService.register(formData);
         alert('Account created successfully!');
+        navigate('/home');
     };
 
     return (

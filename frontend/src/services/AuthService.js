@@ -1,6 +1,6 @@
 import api from './api';
 
-const AuthService = {
+const authService = {
   login: async (credentials) => {
     const response = await api.post('/auth/login', credentials);
     const token = response.data.token;
@@ -32,4 +32,4 @@ const AuthService = {
   },
 };
 
-export default AuthService;
+export default authService;
