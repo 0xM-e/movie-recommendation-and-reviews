@@ -28,8 +28,8 @@ export const registerUser = createAsyncThunk(
 );
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  isAuthenticated: localStorage.getItem('token') ? true : false,
   loading: false,
   error: null,
   registerSuccess: false,
@@ -45,6 +45,7 @@ const authSlice = createSlice({
       state.error = null;
       state.registerSuccess = false;
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
     resetRegisterSuccess(state) {
       state.registerSuccess = false;

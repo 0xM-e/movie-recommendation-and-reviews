@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Auth.css';
-import authService from '../services/AuthService';
 
 const LoginPage = () => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [remember, setRemember] = useState(false);
 
     const navigate = useNavigate();
+    const { isAuthenticated } = useSelector((state) => state.auth);
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/home');
+        }
+    }, [isAuthenticated, navigate]);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (!email || !password) {
             setError('Please fill in all fields.');
             return;
         }
-        authService.login({ email, password})
-        console.log({ email, password, remember });
-        setError('');
-        alert('Login successful!');
-        navigate('/home');
+
+        try {
+            const userData = { email, password };
+            await dispatch(loginUser(userData)).unwrap();
+            setError('');
+            if (isAuthenticated) {
+                alert('Login successful!');
+                navigate('/home');
+            }
+        } catch (err) {
+            setError(err || 'Login failed');
+        }
     };
 
     return (
