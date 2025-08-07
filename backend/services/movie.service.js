@@ -84,7 +84,17 @@ exports.deleteRating = async (imdbID, rating) => {
     if (!movie) {
         return;
     }
-    const newRating = (movie.rating * movie.reviewCount - rating) / (movie.reviewCount - 1);
+    if (movie.reviewCount <= 1) {
+        movie.rating = 0;
+        movie.reviewCount = 0;
+        await movie.save();
+        return;
+    }
+
+    let newRating = (movie.rating * movie.reviewCount - rating) / (movie.reviewCount - 1);
+
+    if (newRating < 0 || isNaN(newRating)) newRating = 0;
+
     movie.rating = newRating;
     movie.reviewCount--;
     await movie.save();

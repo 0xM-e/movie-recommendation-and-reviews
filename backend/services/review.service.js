@@ -65,7 +65,7 @@ exports.createReview = async (imdbID, author, rating, comment) => {
 
 exports.updateReview = async (imdbID, author, reviewID, rating, comment) => {
     const existingReview = await Review.findOne({ imdbID: imdbID, author: author });
-    if (existingReview) {
+    if (!existingReview) {
         return null;
     }
     const previousReview = await Review.findOne({ imdbID: imdbID, _id: reviewID });

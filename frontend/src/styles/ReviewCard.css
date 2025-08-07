@@ -75,6 +75,39 @@
     margin: 0;
 }
 
+.edit-review {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.update-btn,
+.cancel-btn {
+    background-color: #ff4b72;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    transition: background 0.3s ease;
+}
+
+.update-btn:hover,
+.cancel-btn:hover {
+    background-color: #ff2b4a;
+}
+
+.update-btn:focus,
+.cancel-btn:focus {
+    outline: none;
+}
+
+.update-btn:active,
+.cancel-btn:active {
+    transform: scale(0.95);
+}
+
 .review-footer {
     display: flex;
     gap: 14px;
@@ -83,4 +116,28 @@
     position: absolute;
     bottom: 10px;
     right: 16px;
+}
+
+.delete-btn {
+    background-color: rgba(255, 75, 114, 0.8);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    margin-left: 14px;
+    transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: rgba(255, 75, 114, 1);
+}
+
+.delete-btn:focus {
+    outline: none;
+}
+
+.delete-btn:active {
+    transform: scale(0.95);
 }

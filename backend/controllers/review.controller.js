@@ -67,7 +67,7 @@ exports.updateReview = async (req, res) => {
         }
 
         moviesService.updateRating(imdbID, updatedReview.rating, rating);
-        res.json(updatedReview);
+        res.json({ message: 'Review updated successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

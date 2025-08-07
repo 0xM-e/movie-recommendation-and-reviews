@@ -57,6 +57,36 @@ const MovieDetailPage = () => {
         }));
     };
 
+    const handleDeleteReview = async (reviewId) => {
+        try {
+            await reviewService.deleteReview(imdbID, reviewId);
+
+            setReviews((prevReviews) => prevReviews.filter((review) => review._id !== reviewId));
+
+            setReviewVotes((prevVotes) => {
+                const updatedVotes = { ...prevVotes };
+                delete updatedVotes[reviewId];
+                return updatedVotes;
+            });
+        } catch (error) {
+            console.error("Error deleting review:", error);
+        }
+    };
+
+    const handleUpdateReview = async (reviewId, updatedComment, updatedRate) => {
+        console.log("Updating review:", reviewId, updatedComment);
+        try {
+            const updatedReview = await reviewService.updateReview(imdbID, reviewId, { comment: updatedComment, rating: updatedRate });
+            setReviews((prevReviews) =>
+                prevReviews.map((review) =>
+                    review._id === reviewId ? { ...review, comment: updatedComment } : review
+                )
+            );
+        } catch (error) {
+            console.error("Error updating review:", error);
+        }
+    };
+
     return (
         <div className="movie-detail-container">
             <div className="movie-detail-box">
@@ -85,6 +115,8 @@ const MovieDetailPage = () => {
                                 review={review}
                                 votes={reviewVotes[review.id]}
                                 onVoteChange={handleVoteChange}
+                                onDeleteReview={handleDeleteReview}
+                                onUpdateReview={handleUpdateReview}
                             />
                         ))
                     )}
