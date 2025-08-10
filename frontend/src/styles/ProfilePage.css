@@ -1,20 +1,107 @@
-.profile-page {
-    height: 100vh;
-    align-content: center;
-    background-color: #19192e;
-    color: white;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+.profile-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  min-width: 80vh;
+  max-height: 85vh;
 }
 
-.profile-container {
-    width: '240px';
-    height: '240px';
-    align-content: center;
-    background-color: red;
-    color: white;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+/* Profil kartı */
+.profile-card {
+  flex: 0.75;
+  background-color: #1f1f1f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #2a2a2a;
+}
+
+.profile-photo {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 15px 5px #1a1a1a;
+}
+
+.user {
+  color: #b3b3b3;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.stats strong {
+  color: #e50914;
+}
+
+.stats p {
+  color: #b3b3b3;
+}
+
+/* Sağ kısım içerik */
+.content {
+  flex: 2;
+  background-color: #1f1f1f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  overflow-y: scroll;
+  border: 1px solid #2a2a2a;
+}
+
+.content h2 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.profile-review-card {
+  background-color: #2a2a2a;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  gap: 3rem;
+  display: flex;
+  text-align: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.profile-review-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(229, 9, 20, 0.445);
+}
+
+.movie-poster {
+  width: 80px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.profile-review-text {
+  flex: 1;
+  overflow-y: auto;
+  color: #ffffff;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.review-text h4 {
+  margin: 0 0 0.3rem 0;
+  color: #fff;
+}
+
+.review-card p {
+  color: #c7c7c7;
+  font-size: 0.9rem;
 }
