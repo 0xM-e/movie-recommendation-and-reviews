@@ -25,6 +25,28 @@ const reviewService = {
         console.log(`Review updated:`, response.data);
         return response.data;
     },
+    getDailyReviews: async () => {
+        console.log('Fetching daily reviews');
+        const response = await api.get('/reviews/daily');
+        return response.data;
+    },
+    getWeeklyReviews: async () => {
+        console.log('Fetching weekly reviews');
+        const response = await api.get('/reviews/weekly');
+        return response.data;
+    },
+    getTopRatedReviews: async () => {
+        console.log('Fetching top-rated reviews');
+        const response = await api.get('/reviews/toprated');
+        return response.data;
+    },
+    getPaginatedReviews: async (page, limit) => {
+        console.log(`Fetching paginated reviews: page ${page}, limit ${limit}`);
+        const response = await api.get('/reviews/getall', {
+            params: { page, limit }
+        });
+        return response.data;
+    }
 };
 
 export default reviewService;
