@@ -157,6 +157,7 @@
     font-weight: 500;
     font-family: inherit;
     background-color: #fff;
+    color: #333;
     cursor: pointer;
     transition: border-color 0.25s, background-color 0.25s, transform 0.25s;
 }
