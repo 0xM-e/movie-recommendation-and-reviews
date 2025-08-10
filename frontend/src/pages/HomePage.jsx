@@ -1,6 +1,8 @@
 import React from 'react';
 import Carousel from '../components/Carousel';
 import '../styles/HomePage.css';
+import ImageSlider from '../components/ImageSlider';
+
 
 const panels = [
     {
@@ -186,14 +188,9 @@ const HomePage = () => {
                 </div>
 
                 <div className='home-item'>
-                    <Carousel
-                        panels={panels}
-                        panelWidth={300}
-                        panelHeight={550}
-                        rotationSpeed={0.1}
-                    />
-                </div>
-
+                    <h2 style={{ textAlign: 'center' }}>🎬 Daily Most Rated</h2>
+                    <ImageSlider />
+                </div>                    
                 <div className='home-item'>
                     <h2>🍿 Weekly Movies</h2>
                     <div className="poster-grid">

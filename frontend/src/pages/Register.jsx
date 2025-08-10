@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../redux/authSlice';
 import '../styles/Auth.css';
 
 const RegisterPage = () => {
@@ -11,8 +13,33 @@ const RegisterPage = () => {
     });
 
     const [showPassword, setShowPassword] = useState(false);
-
     const [errors, setErrors] = useState({});
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { isAuthenticated, registerSuccess } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/home');
+        }
+    }, [isAuthenticated, navigate]);
+
+    useEffect(() => {
+        if (registerSuccess) {
+            setRegistrationSuccess(true);
+            setTimeout(() => {
+                navigate('/login');
+            }, 1500);
+        }
+    }, [registerSuccess, navigate]);
+
+    useEffect(() => {
+        if (registrationSuccess) {
+            navigate('/login');
+        }
+    }, [registrationSuccess, navigate]);
 
     const handleChange = (e) => {
         setFormData((prev) => ({
@@ -49,7 +76,7 @@ const RegisterPage = () => {
             setErrors(validationErrors);
             return;
         }
-
+        dispatch(registerUser(formData));
         alert('Account created successfully!');
     };
 

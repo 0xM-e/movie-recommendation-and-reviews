@@ -1,6 +1,7 @@
 require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
+const cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -16,6 +17,9 @@ const listEndpoints = require('express-list-endpoints');
 
 var app = express();
 
+app.use(cors({
+  origin: process.env.CORS_ORIGIN
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,11 +31,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRoutes);
-app.use('/movies', movieRoutes);
-app.use('/reviews', reviewRoutes);
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/auth', authRoutes);
+app.use('/api/movies', movieRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 app.get('/endpoints', (req, res) => {
   const endpoints = listEndpoints(app);

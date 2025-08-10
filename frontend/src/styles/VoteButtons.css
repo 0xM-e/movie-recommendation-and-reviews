@@ -1,0 +1,36 @@
+.vote-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.vote-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+}
+
+.vote-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.vote-button:focus {
+    outline: none;
+    box-shadow: 0 0 6px #ff4b72;
+}
+
+.vote-button.useful {
+    color: #ff7b7b;
+}
+
+.vote-button.not-useful {
+    color: #ffa3a3;
+}

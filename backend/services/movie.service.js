@@ -1,14 +1,27 @@
 const Movie = require('../models/Movie');
-const omdbApi = require('../external/omdb.api');
+const tmdbApi = require('../external/tmdb.api');
 
-exports.fetchMovieByImdbId = async (imdbID) => {
-    return await omdbApi.fetchMovieByImdbId(imdbID);
+exports.fetchMovieById = async (movieId) => {
+    return await tmdbApi.fetchMovieById(movieId);
 }
 
 exports.fetchMovieByName = async (movieName) => {
-    return await omdbApi.fetchMovieByName(movieName);
+    return await tmdbApi.fetchMovieByName(movieName);
 }
 
+exports.isMovieExists = async (imdbID) => {
+    try {
+        const movie = await Movie.findOne({ imdbID });
+        if (movie) {
+            console.log(`Movie with ID ${imdbID} already exists in the database.`);
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error("Error occurred while checking movie existence:", error);
+        return false;
+    }
+}
 exports.updateMovie = async (user, imdbID, updates) => {
     console.log(user.role);
     if (user.role !== 'admin') {
@@ -71,7 +84,17 @@ exports.deleteRating = async (imdbID, rating) => {
     if (!movie) {
         return;
     }
-    const newRating = (movie.rating * movie.reviewCount - rating) / (movie.reviewCount - 1);
+    if (movie.reviewCount <= 1) {
+        movie.rating = 0;
+        movie.reviewCount = 0;
+        await movie.save();
+        return;
+    }
+
+    let newRating = (movie.rating * movie.reviewCount - rating) / (movie.reviewCount - 1);
+
+    if (newRating < 0 || isNaN(newRating)) newRating = 0;
+
     movie.rating = newRating;
     movie.reviewCount--;
     await movie.save();

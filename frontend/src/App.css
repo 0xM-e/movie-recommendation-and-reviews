@@ -22,6 +22,13 @@
   z-index: 0;
 }
 
+.App-header {
+  position: relative;
+  margin-top: 60px;
+  background: linear-gradient(to right, rgba(255, 75, 43, 0.5), rgba(255, 255, 255, 0.5));
+  box-shadow: 0 0 55px #ff7b7bc0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
