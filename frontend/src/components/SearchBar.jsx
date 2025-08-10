@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import movieService from '../services/movieService';
 import '../styles/SearchBar.css';
 
-const SearchBar = () => {
+const SearchBar = ({ isOpen }) => {
     const [query, setQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -60,7 +60,7 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="header-search">
+        <div className={`header-search ${isOpen ? 'open' : ''}`}>
             <input
                 type="text"
                 className="search-input"

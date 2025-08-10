@@ -144,7 +144,6 @@
     font-weight: 500;
     border-radius: 4px;
     transition: background 0.3s ease;
-    /* Animasyonu kaldırdık */
 }
 
 .logout-button {
@@ -167,7 +166,6 @@
     background-color: #333;
     color: #fff;
     transform: scale(1.05);
-    /* Buton hover animasyonu */
 }
 
 .logout-button:focus,
@@ -181,9 +179,15 @@
 }
 
 @media (max-width: 768px) {
+    .main-header {
+        height: auto;
+        padding: 10px 0;
+    }
+
     .header-container {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        padding: 12px 24px;
     }
 
     .header-search {
@@ -193,20 +197,64 @@
 
     .search-input {
         width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .header-search {
+        display: none;
+    }
+
+    .header-search.open {
+        display: flex;
     }
 
     .header-nav {
-        margin-top: 8px;
-        display: flex;
+        display: none;
         flex-direction: column;
-        gap: 6px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .header-nav.open {
+        display: flex;
     }
 
     .header-nav a {
+        width: auto;
         margin-left: 0;
+        text-align: center;
     }
 
     .user-profile {
         margin-top: 10px;
+        align-items: center;
+    }
+
+    .mobile-menu {
+        position: absolute;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+        margin-top: 3px;
+    }
+
+    .hamburger-icon {
+        width: 30px;
+        height: 25px;
+        padding-right: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    .hamburger-icon div {
+        width: 100%;
+        height: 5px;
+        background-color: gray;
+        border-radius: 5px;
     }
 }

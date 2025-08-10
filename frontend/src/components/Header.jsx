@@ -9,11 +9,13 @@ const Header = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector(state => state.auth);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); 
 
   const menuRef = useRef(null);
   const avatarRef = useRef(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const handleLogout = () => {
     dispatch(logout());
     setMenuOpen(false);
@@ -35,10 +37,17 @@ const Header = () => {
 
   return (
     <header className="main-header">
+      <div className='mobile-menu'>
+        <div className='hamburger-icon' onClick={toggleMobileMenu}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
       <div className="header-container">
         <div className="header-logo">MoviVibe</div>
-        <SearchBar />
-        <nav className="header-nav">
+        <SearchBar isOpen={mobileMenuOpen} />
+        <nav className={`header-nav ${mobileMenuOpen ? 'open' : ''}`}>
           <Link to="/home">Home</Link>
           <Link to="/about">About</Link>
 
