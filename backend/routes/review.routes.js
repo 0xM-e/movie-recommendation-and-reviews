@@ -4,6 +4,9 @@ const reviewController = require('../controllers/review.controller');
 const { authenticate } = require('../middleware/auth.middleware');
 
 router.get('/getall', reviewController.getPaginatedReviews);
+router.get('/daily', reviewController.getDailyReviews);
+router.get('/weekly', reviewController.getWeeklyReviews);
+router.get('/toprated', reviewController.getTopRatedReviews);
 router.get('/:imdbID', reviewController.getMovieReviewsByImdbID);
 
 router.post('/usefull/:reviewID', authenticate, reviewController.markReviewAsUsefull);

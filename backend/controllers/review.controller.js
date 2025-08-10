@@ -27,6 +27,46 @@ exports.getMovieReviewsByImdbID = async (req, res) => {
     }
 }
 
+exports.getDailyReviews = async (req, res) => {
+    try {
+        const reviews = await reviewService.getDailyReviews();
+        if (!reviews || reviews.length === 0) {
+            return res.status(404).json({ message: 'No daily reviews found' });
+        }
+
+        res.json(reviews);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.getWeeklyReviews = async (req, res) => {
+    try {
+        const reviews = await reviewService.getWeeklyReviews();
+        if (!reviews || reviews.length === 0) {
+            return res.status(404).json({ message: 'No weekly reviews found' });
+        }
+
+        res.json(reviews);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.getTopRatedReviews = async (req, res) => {
+    try {
+        const reviews = await reviewService.getTopRatedReviews();
+
+        if (!reviews || reviews.length === 0) {
+            return res.status(404).json({ message: 'No top rated reviews found' });
+        }
+
+        res.json(reviews);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 exports.createReview = async (req, res) => {
     try {
         const { imdbID } = req.params;

@@ -14,12 +14,12 @@ exports.isMovieExists = async (imdbID) => {
         const movie = await Movie.findOne({ imdbID });
         if (movie) {
             console.log(`Movie with ID ${imdbID} already exists in the database.`);
-            return true;
+            return movie;
         }
-        return false;
+        return null;
     } catch (error) {
         console.error("Error occurred while checking movie existence:", error);
-        return false;
+        return null;
     }
 }
 exports.updateMovie = async (user, imdbID, updates) => {

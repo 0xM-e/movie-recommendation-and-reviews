@@ -29,6 +29,86 @@ exports.getReviewsByImdbID = async (imdbID) => {
     return reviews;
 }
 
+exports.getDailyReviews = async () => {
+    const today = new Date();
+    const startOfDay = new Date(today.setUTCHours(0, 0, 0, 0));
+    const endOfDay = new Date(today.setUTCHours(23, 59, 59, 999));
+
+    const reviews = await Review.aggregate([
+        {
+            $match: {
+                createdAt: {
+                    $gte: startOfDay,
+                    $lte: endOfDay
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$movie",
+                reviewCount: { $sum: 1 }
+            }
+        },
+        {
+            $sort: { reviewCount: -1 }
+        },
+        {
+            $lookup: {
+                from: "movies",
+                localField: "_id",
+                foreignField: "_id",
+                as: "movie"
+            }
+        },
+        { $unwind: "$movie" },
+        {
+            $project: {
+                imdbID: "$movie.imdbID",
+                movie: {
+                    _id: "$movie._id",
+                    poster: "$movie.poster",
+                    title: "$movie.title",
+                    reviewCount: "$reviewCount",
+                    rating: "$movie.rating"
+                },
+                createdAt: "$movie.createdAt"
+            }
+        },
+        { $limit: 10 }
+    ]);
+
+    return reviews;
+};
+
+
+
+exports.getWeeklyReviews = async () => {
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    oneWeekAgo.setUTCHours(0, 0, 0, 0);
+
+    const reviews = await Review.find({
+        createdAt: { $gte: oneWeekAgo },
+    })
+        .select('imdbID rating createdAt')
+        .sort({ rating: -1 })
+        .limit(10)
+        .populate('movie', 'title director poster reviewCount rating');
+
+    return reviews;
+};
+
+
+exports.getTopRatedReviews = async () => {
+    const reviews = await Review.find()
+        .select('imdbID rating createdAt')
+        .sort({ rating: -1 })
+        .limit(10)
+        .populate('movie', 'title director poster reviewCount rating');
+
+    return reviews;
+};
+
 exports.createReview = async (imdbID, author, rating, comment) => {
     const existingReview = await Review.findOne({ imdbID, author: author });
     if (existingReview) {
@@ -36,6 +116,7 @@ exports.createReview = async (imdbID, author, rating, comment) => {
     }
     const existingMovie = await movieService.isMovieExists(imdbID);
 
+    let movie;
     if (!existingMovie) {
         const fetchMovie = await movieService.fetchMovieById(imdbID);
         if (!fetchMovie) {
@@ -47,15 +128,17 @@ exports.createReview = async (imdbID, author, rating, comment) => {
             director: fetchMovie.director,
             poster: fetchMovie.poster
         });
-        await newMovie.save();
-        console.log('Movie created:', newMovie);
+        movie = await newMovie.save();
+    } else {
+        movie = existingMovie;
     }
 
     const newReview = new Review({
         imdbID,
         author,
         rating,
-        comment
+        comment,
+        movie: movie._id
     });
 
     await newReview.save();
