@@ -1,9 +1,10 @@
 .slider-container {
-  width: 100%;
   overflow: hidden;
   margin-bottom: 0;
-  padding: 0;
-  background: #111;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 0;
+  padding-right: 0;
   display: flex;
   align-items: center;
   z-index: 999;
@@ -12,7 +13,7 @@
 .slider-track {
   display: flex;
   width: fit-content;
-  animation: scroll-left 20s linear infinite;
+  animation: scroll-left 32s linear infinite;
 }
 
 .slider-container:hover .slider-track {
@@ -24,15 +25,18 @@
   flex-direction: column;
   align-items: center;
   min-width: 150px;
+  background-color: #030303;
   color: #fff;
   font-family: sans-serif;
   text-align: center;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding-bottom: 30px;
+  padding-bottom: 32px;
 }
 
 .slider-card:hover {
+  border-radius: 12px;
+  overflow: hidden;
   transform: scale(1.05);
   box-shadow: 0 0 55px #ff7b7bc0;
   z-index: 10;
@@ -41,7 +45,6 @@
 .slider-card img {
   height: 320px;
   width: 250px;
-  border-radius: 5px;
   margin-bottom: 5px;
   object-fit: cover;
 }

@@ -55,7 +55,7 @@ const Header = () => {
             <div className="user-profile" onClick={toggleMenu} ref={avatarRef}>
               <span className="username">{user?.username || 'John Doe'}</span>
               <div className="avatar">
-                <img src={user?.avatar || 'https://i.pravatar.cc/40?img=3'} alt="User Avatar" />
+                <img src={user?.avatar || 'https://avatars.githubusercontent.com/u/159952115?v=4'} alt="User Avatar" />
               </div>
               {menuOpen && (
                 <div className="dropdown-menu" ref={menuRef}>

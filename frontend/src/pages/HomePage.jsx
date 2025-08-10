@@ -1,5 +1,4 @@
-import React from 'react';
-import Carousel from '../components/Carousel';
+import ImageSlider from '../components/ImageSlider';
 import '../styles/HomePage.css';
 
 const panels = [
@@ -166,12 +165,7 @@ const HomePage = () => {
                 </div>
 
                 <div className='home-item'>
-                    <Carousel
-                        panels={panels}
-                        panelWidth={500}
-                        panelHeight={500}
-                        rotationSpeed={0.3}
-                    />
+                    <ImageSlider />
                 </div>
 
                 <div className='home-item'>
