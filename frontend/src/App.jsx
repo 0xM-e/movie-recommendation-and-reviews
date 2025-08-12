@@ -6,6 +6,7 @@ import RegisterPage from './pages/Register';
 import MovieDetailPage from './pages/MovieDetailPage';
 import ProfilePage from './pages/ProfilePage';
 import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import './App.css'
@@ -22,6 +23,8 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/movies/:movieID/:movieName" element={<MovieDetailPage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </div >
