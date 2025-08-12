@@ -48,19 +48,19 @@ function ProfilePage() {
         <h2>{user.name}</h2>
         <p className="user">@{user.username}</p>
         <p>{user.bio}</p>        
-        <p>📅 Katıldı: {user.joinDate}</p>
+        <p>📅 Joined: {user.joinDate}</p>
         <div className="stats">
           <div>
             <strong>{user.stats.reviews}</strong>
-            <p>İnceleme</p>
+            <p>Reviews</p>
           </div>
           <div>
             <strong>{user.stats.followers}</strong>
-            <p>Takipçi</p>
+            <p>Followers</p>
           </div>
           <div>
             <strong>{user.stats.following}</strong>
-            <p>Takip</p>
+            <p>Following</p>
           </div>
         </div>
       </div>
@@ -71,14 +71,16 @@ function ProfilePage() {
         {reviews.map(review => (
           <div className="profile-review-card" key={review.id}>
             <img className="movie-poster" src={review.poster} alt={review.movie} />
-            <div className="profile-review-text">
+            <div className="review-group">
+              <div className="profile-review-text">
               <h3>{review.movie}</h3>
               <p>{review.review}</p>
-            </div>
-            <div className="profile-review-rating">
-              <h4>Rating</h4>
-              <p>⭐⭐⭐⭐⭐</p>
-            </div>
+              </div>
+              <div className="profile-review-rating">
+                <h4>Rating</h4>
+                <p>⭐⭐⭐⭐⭐</p>
+              </div>
+            </div>            
           </div>
         ))}
       </div>

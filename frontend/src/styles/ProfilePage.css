@@ -45,14 +45,14 @@
 }
 
 .stats strong {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: bolder;
   color: #e50914;
 }
 
 .stats p {
   font-weight: bold;
-  color: #b3b3b3;
+  color: #a8a8a8;
 }
 
 /* Sağ kısım içerik */
@@ -62,7 +62,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem;
   border-radius: 12px;
-  overflow-y: scroll;
+  overflow-y: scroll;  
 }
 
 .content h2 {
@@ -80,6 +80,7 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.2);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  overflow-x: hidden;
 }
 
 .profile-review-card:hover {
@@ -88,16 +89,23 @@
 }
 
 .movie-poster {
-  width: 80px;
+  width: auto;
   height: 140px;
   object-fit: cover;
   border-radius: 6px;
   flex-shrink: 0;
 }
 
+.review-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .profile-review-text {
+  min-width: 30%;
   flex: 1;
-  overflow-y: auto;
   color: #ffffff;
   font-size: 1rem;
   text-align: left;
@@ -105,8 +113,9 @@
 
 .profile-review-rating {
   flex-direction: column;
-  min-width: 240px;
+  min-width: 120px;
   display: flex;
+  margin-left: 0.9rem;
   align-items: start;
   gap: 0.5rem;
   color: fff;
@@ -122,34 +131,39 @@
   font-size: 0.9rem;
 }
 
+@media only screen and (max-width: 1024px) and (min-width: 769px)
+{
+  .stats {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @media only screen and (max-width: 768px) {
 
   .profile-container {
     flex-direction: column;
     align-items: center;
     height: auto;
-    padding: 2% 4%;
+    padding: 6%;
   }
 
   .profile-card {
     max-width: none;
     width: 100%;
-    padding: 1rem; /* iç boşluk */
-    background-color: rgba(229, 9, 20, 0.1);
+    padding: 1rem;
   }
 
   .content {
     width: 100%;
     margin-top: 1rem;
-    padding: 1rem; /* mobilde kenarlardan boşluk */
-    overflow-y: visible; /* scrollbar yok */
+    padding: 1rem; 
+    overflow-y: visible;
   }
 
   .profile-review-card {
-    flex-direction: column;
+    flex-direction: flex;
     gap: 1rem;
-    align-items: center;
-    text-align: center;
   }
 
   .movie-poster {
@@ -157,8 +171,14 @@
     height: auto;
   }
 
+  .review-group {
+    flex-direction: column;
+    align-items: start;
+  }
+
   .profile-review-rating {
-    min-width: unset;
+    margin-left: 0;
+    flex-direction: row;
     align-items: center;
   }
 }
