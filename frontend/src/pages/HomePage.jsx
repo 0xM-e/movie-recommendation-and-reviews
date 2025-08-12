@@ -1,4 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import ImageSlider from '../components/ImageSlider';
+import reviewService from '../services/reviewService';
+import { timeAgo } from '../utils/timeFormatter';
 import '../styles/HomePage.css';
 
 const panels = [
@@ -104,45 +107,6 @@ const panels = [
     },
 ];
 
-const comments = [
-    {
-        id: 1,
-        username: "Alex",
-        avatarUrl: "https://i.pravatar.cc/40?img=3",
-        text: "Great design!",
-        date: "2025-07-31",
-        movieTitle: "Inception",
-        movieRate: 4.8,
-    },
-    {
-        id: 2,
-        username: "Harry",
-        avatarUrl: "https://i.pravatar.cc/40?img=5",
-        text: "Looks very useful.",
-        date: "2025-07-30",
-        movieTitle: "Interstellar",
-        movieRate: 4.7,
-    },
-    {
-        id: 3,
-        username: "Mark",
-        avatarUrl: "https://i.pravatar.cc/40?img=7",
-        text: "Colors and fonts are very harmonious.",
-        date: "2025-07-29",
-        movieTitle: "The Matrix",
-        movieRate: 4.6,
-    },
-    {
-        id: 4,
-        username: "Sophia",
-        avatarUrl: "https://i.pravatar.cc/40?img=9",
-        text: "Fantastic plot and visuals!",
-        date: "2025-07-28",
-        movieTitle: "Inception",
-        movieRate: 4.8,
-    },
-];
-
 const posters = [
     "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",
     "https://image.tmdb.org/t/p/w500/eWUh4rgxtgypgnOa6uGMnUt01ux.jpg",
@@ -156,6 +120,22 @@ const posters = [
     "https://image.tmdb.org/t/p/w500/2cxhvwyEwRlysAmRH4iodkvo0z5.jpg",];
 
 const HomePage = () => {
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        // Fetching reviews
+        const fetchReviews = async () => {
+            try {
+                const response = await reviewService.getPaginatedReviews(1, 5);
+                setComments(response);
+            } catch (error) {
+                console.error('Error fetching reviews:', error);
+            }
+        };
+
+        fetchReviews();
+    }, []);
+
     return (
         <div className='home-container'>
             <div className='home-wrapper'>
@@ -197,21 +177,25 @@ const HomePage = () => {
                             <div className="reviews-header">
                                 <div className="reviews-cell user-cell">User</div>
                                 <div className="reviews-cell review-cell">Review</div>
+                                <div className="reviews-cell movie-cell">Movie</div>
                                 <div className="reviews-cell date-cell">Date</div>
                             </div>
-                            {comments.map(({ id, username, avatarUrl, text, date, movieTitle, movieRate }) => (
-                                <div key={id} className="reviews-row">
+                            {comments?.data?.map((review) => (
+                                <div key={review._id} className="reviews-row">
                                     <div className="reviews-cell user-cell">
-                                        <img src={avatarUrl} alt={`${username} avatar`} className="user-avatar" loading="lazy" />
-                                        <span className="user-name">{username}</span>
+                                        <img src={null} alt={`${review.author.username} avatar`} className="user-avatar" loading="lazy" />
+                                        <span className="user-name">{review.author.username}</span>
                                     </div>
                                     <div className="reviews-cell review-cell">
-                                        <p>{text}</p>
+                                        <p>{review.comment}</p> <span className="movie-rate">⭐ {review.rating}</span>
+                                    </div>
+                                    <div className="reviews-cell movie-cell">
+                                        <img src={review.movie.poster} alt={review.movie.title} loading="lazy" />
                                         <small className="movie-title">
-                                            Movie: {movieTitle} &nbsp; <span className="movie-rate">⭐ {movieRate}</span>
+                                            {review.movie.title} &nbsp;
                                         </small>
                                     </div>
-                                    <div className="reviews-cell date-cell">{date}</div>
+                                    <div className="reviews-cell date-cell">{timeAgo(review.createdAt)}</div>
                                 </div>
                             ))}
                         </div>
@@ -223,3 +207,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

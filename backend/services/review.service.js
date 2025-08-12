@@ -10,7 +10,8 @@ exports.getPaginatedReviews = async (page, limit) => {
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit)
-            .populate('author', 'username role'),
+            .populate('author', 'username role')
+            .populate('movie', 'title director poster reviewCount rating'),
 
         Review.countDocuments()
     ]);
