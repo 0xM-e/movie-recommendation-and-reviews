@@ -13,11 +13,8 @@ import './App.css'
 function App() {
   return (
     <div className="App">
-      <div className='overlay' />
       <Header />
-      <div className='App-header'>
-      </div>
-      
+      <div className='App-header'></div>      
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
