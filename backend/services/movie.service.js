@@ -9,11 +9,11 @@ exports.fetchMovieByName = async (movieName) => {
     return await tmdbApi.fetchMovieByName(movieName);
 }
 
-exports.isMovieExists = async (imdbID) => {
+exports.isMovieExists = async (tmdbID) => {
     try {
-        const movie = await Movie.findOne({ imdbID });
+        const movie = await Movie.findOne({ tmdbID });
         if (movie) {
-            console.log(`Movie with ID ${imdbID} already exists in the database.`);
+            console.log(`Movie with ID ${tmdbID} already exists in the database.`);
             return movie;
         }
         return null;
@@ -22,12 +22,12 @@ exports.isMovieExists = async (imdbID) => {
         return null;
     }
 }
-exports.updateMovie = async (user, imdbID, updates) => {
+exports.updateMovie = async (user, tmdbID, updates) => {
     console.log(user.role);
     if (user.role !== 'admin') {
         throw new Error("Unauthorized: Only admins can update movies.");
     }
-    const movie = await Movie.findOne({ imdbID });
+    const movie = await Movie.findOne({ tmdbID });
     if (!movie) {
         return;
     }
@@ -36,11 +36,11 @@ exports.updateMovie = async (user, imdbID, updates) => {
     return movie;
 }
 
-exports.deleteMovie = async (user, imdbID) => {
+exports.deleteMovie = async (user, tmdbID) => {
     if (user.role !== 'admin') {
         throw new Error("Unauthorized: Only admins can delete movies.");
     }
-    const movie = await Movie.findOneAndDelete({ imdbID });
+    const movie = await Movie.findOneAndDelete({ tmdbID });
     if (!movie) {
         return;
     }
@@ -68,8 +68,8 @@ exports.getMostPopularMovies = async (page, limit) => {
 };
 
 
-exports.calculateRating = async (imdbID, rating) => {
-    const movie = await Movie.findOne({ imdbID });
+exports.calculateRating = async (tmdbID, rating) => {
+    const movie = await Movie.findOne({ tmdbID });
     if (!movie) {
         return;
     }
@@ -79,8 +79,8 @@ exports.calculateRating = async (imdbID, rating) => {
     await movie.save();
 }
 
-exports.deleteRating = async (imdbID, rating) => {
-    const movie = await Movie.findOne({ imdbID });
+exports.deleteRating = async (tmdbID, rating) => {
+    const movie = await Movie.findOne({ tmdbID });
     if (!movie) {
         return;
     }
@@ -100,8 +100,8 @@ exports.deleteRating = async (imdbID, rating) => {
     await movie.save();
 }
 
-exports.updateRating = async (imdbID, previousRating, newRating) => {
-    const movie = await Movie.findOne({ imdbID });
+exports.updateRating = async (tmdbID, previousRating, newRating) => {
+    const movie = await Movie.findOne({ tmdbID });
     if (!movie) {
         return;
     }

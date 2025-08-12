@@ -9,7 +9,7 @@ import "../styles/MovieDetailPage.css";
 const MovieDetailPage = () => {
     const { movieID } = useParams();
     const [movie, setMovie] = useState(null);
-    const [imdbID, setImdbID] = useState(null);
+    const [tmdbID, setTmdbID] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [reviewVotes, setReviewVotes] = useState({});
 
@@ -19,7 +19,7 @@ const MovieDetailPage = () => {
             try {
                 const movieData = await movieService.getMovieById(movieID);
                 setMovie(movieData);
-                setImdbID(movieData.imdbID);
+                setTmdbID(movieData._id);
             } catch (error) {
                 console.error("Error fetching movie data:", error);
             }
@@ -29,11 +29,12 @@ const MovieDetailPage = () => {
 
     // Fetch reviews data
     useEffect(() => {
-        if (movie && movie.imdbID) {
+        if (movie && tmdbID) {
             const fetchReviewsData = async () => {
                 try {
-                    const reviewsData = await reviewService.getReviewsByImdbId(movie.imdbID);
+                    const reviewsData = await reviewService.getReviewsByTmdbID(tmdbID);
                     setReviews(reviewsData);
+                    console.log("Fetched reviews:", reviewsData);
                     const initialVotes = reviewsData.reduce((acc, review) => {
                         acc[review.id] = { useful: 0, notUseful: 0 };
                         return acc;
@@ -59,7 +60,7 @@ const MovieDetailPage = () => {
 
     const handleDeleteReview = async (reviewId) => {
         try {
-            await reviewService.deleteReview(imdbID, reviewId);
+            await reviewService.deleteReview(tmdbID, reviewId);
 
             setReviews((prevReviews) => prevReviews.filter((review) => review._id !== reviewId));
 
@@ -76,7 +77,7 @@ const MovieDetailPage = () => {
     const handleUpdateReview = async (reviewId, updatedComment, updatedRate) => {
         console.log("Updating review:", reviewId, updatedComment);
         try {
-            const updatedReview = await reviewService.updateReview(imdbID, reviewId, { comment: updatedComment, rating: updatedRate });
+            const updatedReview = await reviewService.updateReview(tmdbID, reviewId, { comment: updatedComment, rating: updatedRate });
             setReviews((prevReviews) =>
                 prevReviews.map((review) =>
                     review._id === reviewId ? { ...review, comment: updatedComment } : review
@@ -123,8 +124,8 @@ const MovieDetailPage = () => {
                 </div>
 
                 {/* Review form */}
-                {imdbID && (
-                    <ReviewForm movieID={imdbID} setReviews={setReviews} />
+                {tmdbID && (
+                    <ReviewForm movieID={tmdbID} setReviews={setReviews} />
                 )}
             </div>
         </div>

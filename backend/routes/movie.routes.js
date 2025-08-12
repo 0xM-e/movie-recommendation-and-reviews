@@ -8,8 +8,8 @@ router.get('/name/:movieName', movieController.getMovieByName);
 router.get('/popular', movieController.getMostPopularMovies);
 router.get('/search/:movieName', movieController.searchMovieByName);
 
-router.put('/update/:imdbID', authenticate, movieController.updateMovie);
+router.put('/update/:tmdbID', authenticate, movieController.updateMovie);
 
-router.delete('/delete/:imdbID', authenticate, movieController.deleteMovie);
+router.delete('/delete/:tmdbID', authenticate, movieController.deleteMovie);
 
 module.exports = router;

@@ -17,10 +17,10 @@ exports.getPaginatedReviews = async (req, res) => {
     }
 }
 
-exports.getMovieReviewsByImdbID = async (req, res) => {
+exports.getMovieReviewsByTmdbID = async (req, res) => {
     try {
-        const { imdbID } = req.params;
-        const reviews = await reviewService.getReviewsByImdbID(imdbID);
+        const { tmdbID } = req.params;
+        const reviews = await reviewService.getReviewsByTmdbID(tmdbID);
         res.json(reviews);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -69,21 +69,21 @@ exports.getTopRatedReviews = async (req, res) => {
 
 exports.createReview = async (req, res) => {
     try {
-        const { imdbID } = req.params;
+        const { tmdbID } = req.params;
         const { rating, comment } = req.body;
         const author = req.user.id;
 
 
-        if (!imdbID || !author || rating === undefined || !comment) {
+        if (!tmdbID || !author || rating === undefined || !comment) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
-        const newReview = await reviewService.createReview(imdbID, author, rating, comment);
+        const newReview = await reviewService.createReview(tmdbID, author, rating, comment);
         console.log(newReview);
         if (!newReview) {
             return res.status(400).json({ message: 'You have already submitted a review for this movie' });
         }
 
-        moviesService.calculateRating(imdbID, rating);
+        moviesService.calculateRating(tmdbID, rating);
         res.status(201).json(newReview);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -92,21 +92,21 @@ exports.createReview = async (req, res) => {
 
 exports.updateReview = async (req, res) => {
     try {
-        const { imdbID, reviewID } = req.params;
+        const { tmdbID, reviewID } = req.params;
         const { rating, comment } = req.body;
         const author = req.user.id;
 
-        if (!imdbID || !reviewID || rating === undefined || !comment) {
+        if (!tmdbID || !reviewID || rating === undefined || !comment) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        const updatedReview = await reviewService.updateReview(imdbID, author, reviewID, rating, comment);
+        const updatedReview = await reviewService.updateReview(tmdbID, author, reviewID, rating, comment);
 
         if (!updatedReview) {
             return res.status(404).json({ message: 'Review not found' });
         }
 
-        moviesService.updateRating(imdbID, updatedReview.rating, rating);
+        moviesService.updateRating(tmdbID, updatedReview.rating, rating);
         res.json({ message: 'Review updated successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -115,19 +115,19 @@ exports.updateReview = async (req, res) => {
 
 exports.deleteReview = async (req, res) => {
     try {
-        const { imdbID, reviewID } = req.params;
+        const { tmdbID, reviewID } = req.params;
         const author = req.user.id;
-        if (!imdbID || !reviewID) {
+        if (!tmdbID || !reviewID) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        const deletedReview = await reviewService.deleteReview(imdbID, author, reviewID);
+        const deletedReview = await reviewService.deleteReview(tmdbID, author, reviewID);
 
         if (!deletedReview) {
             return res.status(404).json({ message: 'Review not found' });
         }
 
-        moviesService.deleteRating(imdbID, deletedReview.rating);
+        moviesService.deleteRating(tmdbID, deletedReview.rating);
         res.json({ message: 'Review deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });

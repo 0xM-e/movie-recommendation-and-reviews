@@ -11,6 +11,7 @@ const ImageSlider = () => {
       try {
         const response = await reviewService.getDailyReviews();
         setData(response);
+        console.log(response);
       } catch (error) {
         console.error('API data fetch error:', error);
       }
@@ -24,8 +25,8 @@ const ImageSlider = () => {
   return (
     <div className="slider-container">
       <div className="slider-track">
-        {repeatedPanels.map((panel) => (
-          <Link to={`/movies/${panel.movie.tmdbID}/${panel.movie.title}`} className="slider-card" key={panel.movie.tmdbID}>
+        {repeatedPanels.map((panel, index) => (
+          <Link to={`/movies/${panel.movie.tmdbID}/${panel.movie.title}`} className="slider-card" key={index}>
             <img src={panel.movie.poster} alt={panel.movie.title} />
             <div className="title">{panel.movie.title}</div>
             <div className="rate">{panel.movie.rating}</div>

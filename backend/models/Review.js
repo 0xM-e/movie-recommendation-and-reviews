@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-    imdbID: { type: String, required: true },
+    tmdbID: { type: String, required: true },
     movie: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     rating: { type: Number, required: true, min: 0, max: 10 },

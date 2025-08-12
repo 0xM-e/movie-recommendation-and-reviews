@@ -7,16 +7,16 @@ router.get('/getall', reviewController.getPaginatedReviews);
 router.get('/daily', reviewController.getDailyReviews);
 router.get('/weekly', reviewController.getWeeklyReviews);
 router.get('/toprated', reviewController.getTopRatedReviews);
-router.get('/:imdbID', reviewController.getMovieReviewsByImdbID);
+router.get('/:tmdbID', reviewController.getMovieReviewsByTmdbID);
 
 router.post('/usefull/:reviewID', authenticate, reviewController.markReviewAsUsefull);
 router.post('/notusefull/:reviewID', authenticate, reviewController.markReviewAsNotUsefull);
 
 
-router.post('/:imdbID', authenticate, reviewController.createReview);
+router.post('/:tmdbID', authenticate, reviewController.createReview);
 
-router.put('/:imdbID/:reviewID', authenticate, reviewController.updateReview);
+router.put('/:tmdbID/:reviewID', authenticate, reviewController.updateReview);
 
-router.delete('/:imdbID/:reviewID', authenticate, reviewController.deleteReview);
+router.delete('/:tmdbID/:reviewID', authenticate, reviewController.deleteReview);
 
 module.exports = router;

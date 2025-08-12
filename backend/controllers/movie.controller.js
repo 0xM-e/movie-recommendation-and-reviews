@@ -2,9 +2,9 @@ const movieService = require('../services/movie.service');
 const Movie = require('../models/Movie');
 
 exports.isMovieExists = async (req, res, next) => {
-  const { imdbID } = req.params;
+  const { tmdbID } = req.params;
   try {
-    const exists = await movieService.isMovieExists(imdbID);
+    const exists = await movieService.isMovieExists(tmdbID);
     if (exists) {
       return res.status(400).json({ message: 'Movie already exists in the database.' });
     }
@@ -26,7 +26,7 @@ exports.getMovieByName = async (req, res) => {
       // Fetch data from TMDb
       movie = await movieService.fetchMovieByName(movieName);
       const newMovie = new Movie();
-      newMovie.imdbID = movie._id;
+      newMovie.tmdbID = movie._id;
       newMovie.poster = movie.poster;
       newMovie.title = movie.title;
       newMovie.save();
@@ -71,11 +71,11 @@ exports.searchMovieByName = async (req, res) => {
 
 exports.updateMovie = async (req, res) => {
   try {
-    const { imdbID } = req.params;
+    const { tmdbID } = req.params;
     const updates = req.body;
     const user = req.user;
 
-    const updateMovie = await movieService.updateMovie(user, imdbID, updates);
+    const updateMovie = await movieService.updateMovie(user, tmdbID, updates);
     if (!updateMovie) {
       return res.status(404).json({ message: 'Movie not found.' });
     }
@@ -88,10 +88,10 @@ exports.updateMovie = async (req, res) => {
 
 exports.deleteMovie = async (req, res) => {
   try {
-    const { imdbID } = req.params;
+    const { tmdbID } = req.params;
     const user = req.user;
 
-    const deletedMovie = await movieService.deleteMovie(user, imdbID);
+    const deletedMovie = await movieService.deleteMovie(user, tmdbID);
 
     if (!deletedMovie) {
       return res.status(404).json({ message: 'Movie not found.' });

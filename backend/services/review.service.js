@@ -25,8 +25,8 @@ exports.getPaginatedReviews = async (page, limit) => {
     };
 };
 
-exports.getReviewsByImdbID = async (imdbID) => {
-    const reviews = await Review.find({ imdbID: imdbID }).populate('author', 'username role');
+exports.getReviewsByTmdbID = async (tmdbID) => {
+    const reviews = await Review.find({ tmdbID: tmdbID }).populate('author', 'username role');
     return reviews;
 }
 
@@ -64,13 +64,14 @@ exports.getDailyReviews = async () => {
         { $unwind: "$movie" },
         {
             $project: {
-                imdbID: "$movie.imdbID",
+                tmdbID: "$movie.tmdbID",
                 movie: {
                     _id: "$movie._id",
                     poster: "$movie.poster",
                     title: "$movie.title",
                     reviewCount: "$reviewCount",
-                    rating: "$movie.rating"
+                    rating: "$movie.rating",
+                    director: "$movie.director"
                 },
                 createdAt: "$movie.createdAt"
             }
@@ -91,7 +92,7 @@ exports.getWeeklyReviews = async () => {
     const reviews = await Review.find({
         createdAt: { $gte: oneWeekAgo },
     })
-        .select('imdbID rating createdAt')
+        .select('tmdbID rating createdAt')
         .sort({ rating: -1 })
         .limit(10)
         .populate('movie', 'title director poster reviewCount rating');
@@ -102,7 +103,7 @@ exports.getWeeklyReviews = async () => {
 
 exports.getTopRatedReviews = async () => {
     const reviews = await Review.find()
-        .select('imdbID rating createdAt')
+        .select('tmdbID rating createdAt')
         .sort({ rating: -1 })
         .limit(10)
         .populate('movie', 'title director poster reviewCount rating');
@@ -110,21 +111,22 @@ exports.getTopRatedReviews = async () => {
     return reviews;
 };
 
-exports.createReview = async (imdbID, author, rating, comment) => {
-    const existingReview = await Review.findOne({ imdbID, author: author });
+exports.createReview = async (tmdbID, author, rating, comment) => {
+    const existingReview = await Review.findOne({ tmdbID, author: author });
     if (existingReview) {
         return null;
     }
-    const existingMovie = await movieService.isMovieExists(imdbID);
+    const existingMovie = await movieService.isMovieExists(tmdbID);
 
     let movie;
     if (!existingMovie) {
-        const fetchMovie = await movieService.fetchMovieById(imdbID);
+        const fetchMovie = await movieService.fetchMovieById(tmdbID);
+        console.log(fetchMovie);
         if (!fetchMovie) {
             throw new Error('Movie not found');
         }
         const newMovie = new Movie({
-            imdbID: fetchMovie.imdbID,
+            tmdbID: fetchMovie._id,
             title: fetchMovie.title,
             director: fetchMovie.director,
             poster: fetchMovie.poster
@@ -135,7 +137,7 @@ exports.createReview = async (imdbID, author, rating, comment) => {
     }
 
     const newReview = new Review({
-        imdbID,
+        tmdbID,
         author,
         rating,
         comment,
@@ -147,14 +149,14 @@ exports.createReview = async (imdbID, author, rating, comment) => {
     return populatedNewReview;
 }
 
-exports.updateReview = async (imdbID, author, reviewID, rating, comment) => {
-    const existingReview = await Review.findOne({ imdbID: imdbID, author: author });
+exports.updateReview = async (tmdbID, author, reviewID, rating, comment) => {
+    const existingReview = await Review.findOne({ tmdbID: tmdbID, author: author });
     if (!existingReview) {
         return null;
     }
-    const previousReview = await Review.findOne({ imdbID: imdbID, _id: reviewID });
+    const previousReview = await Review.findOne({ tmdbID: tmdbID, _id: reviewID });
     await Review.findOneAndUpdate(
-        { imdbID: imdbID, _id: reviewID },
+        { tmdbID: tmdbID, _id: reviewID },
         { rating, comment },
         { new: true }
     );
@@ -162,9 +164,9 @@ exports.updateReview = async (imdbID, author, reviewID, rating, comment) => {
     return existingReview;
 }
 
-exports.deleteReview = async (imdbID, author, reviewID) => {
+exports.deleteReview = async (tmdbID, author, reviewID) => {
     const existingReview = await Review.findOne({
-        imdbID: imdbID,
+        tmdbID: tmdbID,
         author: new mongoose.Types.ObjectId(author),
         _id: new mongoose.Types.ObjectId(reviewID)
     });
