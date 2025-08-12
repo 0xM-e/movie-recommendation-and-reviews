@@ -62,7 +62,7 @@
 }
 
 .header-nav a {
-    margin-left: 20px;
+    padding: 0px 10px;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 500;
@@ -79,7 +79,6 @@
     left: 0;
     background: #ff7e95;
     transform: scaleX(0);
-    transform-origin: right;
     transition: transform 0.3s ease;
 }
 
@@ -127,31 +126,35 @@
     object-fit: cover;
 }
 
-.dropdown-menu {
-    text-align: center;
-    max-width: 120px;
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+/* Dropdown menüsü */
+.dropdown-content {
+    background-color: rgba(0,0,0,0.8);
+    align-items: center;
     position: absolute;
-    top: 36px;
-    left: 6px;
+    top: 100%;
     right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    z-index: 1000;
+    min-width: 120px;
+    border-radius: 0px 0px 12px 12px;
+    padding: 8px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
-.dropdown-menu a {
-    display: flex;
-    color: #fff;
-    padding: 12px;
-    margin-bottom: 8px;
-    font-weight: 500;
-    transition: background 0.3s ease;
+/* Menüdeki linkler */
+.dropdown-content a {
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
 }
 
 .logout-button {
-    margin-top: 5px;
+    margin: 6px;
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;

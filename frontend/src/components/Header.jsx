@@ -58,7 +58,7 @@ const Header = () => {
                 <img src={user?.avatar || 'https://avatars.githubusercontent.com/u/159952115?v=4'} alt="User Avatar" />
               </div>
               {menuOpen && (
-                <div className="dropdown-menu" ref={menuRef}>
+                <div className="dropdown-content" ref={menuRef}>
                   <Link to="/profile">Profile</Link>
                   <Link to="/settings">Settings</Link>
                   <button className="logout-button" onClick={handleLogout}>Logout</button>
